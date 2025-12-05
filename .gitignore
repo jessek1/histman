@@ -1,0 +1,45 @@
+# Distribution packages
+dist/
+
+# Claude Code
+.claude/
+CLAUDE.md
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# IDE / Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Node (if added later)
+node_modules/
+package-lock.json
+
+# Environment files
+.env
+.env.local
+.env.*.local

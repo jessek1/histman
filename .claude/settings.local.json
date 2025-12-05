@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(convert:*)",
+      "Bash(zip:*)",
+      "Bash(chmod:*)",
+      "Bash(/root/rds/histman/scripts/package.sh:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

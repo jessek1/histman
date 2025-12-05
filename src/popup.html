@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HistMan</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- Lock Screen -->
+  <div id="lock-screen" class="screen">
+    <div class="container">
+      <header>
+        <h1>HistMan</h1>
+        <span class="lock-icon">🔒</span>
+      </header>
+
+      <div class="lock-content">
+        <div class="input-group vertical">
+          <input type="password" id="unlock-password" placeholder="Enter password">
+        </div>
+
+        <div id="mfa-input-group" class="input-group vertical hidden">
+          <input type="text" id="unlock-mfa" placeholder="Enter 6-digit code" maxlength="6" autocomplete="off">
+        </div>
+
+        <button id="unlock-btn" class="btn-primary">Unlock</button>
+
+        <div id="lock-status" class="status"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main App Screen -->
+  <div id="main-screen" class="screen hidden">
+    <div class="container">
+      <header>
+        <h1>HistMan</h1>
+        <div class="header-actions">
+          <button id="settings-btn" class="btn-icon" title="Security Settings">⚙️</button>
+          <button id="lock-btn" class="btn-icon" title="Lock">🔒</button>
+          <label class="toggle">
+            <input type="checkbox" id="enabled-toggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </header>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="domains">Domains</button>
+        <button class="tab" data-tab="keywords">Keywords</button>
+      </div>
+
+      <div class="tab-content active" id="domains-tab">
+        <div class="input-group">
+          <input type="text" id="domain-input" placeholder="Enter domain (e.g., example.com)">
+          <button id="add-domain" class="btn-add">Add</button>
+        </div>
+        <ul id="domains-list" class="item-list"></ul>
+      </div>
+
+      <div class="tab-content" id="keywords-tab">
+        <div class="input-group">
+          <input type="text" id="keyword-input" placeholder="Enter keyword">
+          <button id="add-keyword" class="btn-add">Add</button>
+        </div>
+        <ul id="keywords-list" class="item-list"></ul>
+      </div>
+
+      <div class="actions">
+        <button id="scan-history" class="btn-scan">Scan & Clean History</button>
+      </div>
+
+      <div id="status" class="status"></div>
+    </div>
+  </div>
+
+  <!-- Security Settings Screen -->
+  <div id="settings-screen" class="screen hidden">
+    <div class="container">
+      <header>
+        <button id="back-btn" class="btn-icon">←</button>
+        <h1>Security</h1>
+        <span></span>
+      </header>
+
+      <!-- Password Section -->
+      <div class="settings-section">
+        <h2>Password Protection</h2>
+
+        <div id="password-not-set" class="settings-content">
+          <p class="settings-desc">Set a password to protect your settings.</p>
+          <div class="input-group vertical">
+            <input type="password" id="new-password" placeholder="New password">
+            <input type="password" id="confirm-password" placeholder="Confirm password">
+          </div>
+          <button id="set-password-btn" class="btn-primary">Set Password</button>
+        </div>
+
+        <div id="password-set" class="settings-content hidden">
+          <p class="settings-desc success-text">Password protection is enabled.</p>
+          <button id="change-password-btn" class="btn-secondary">Change Password</button>
+          <button id="remove-password-btn" class="btn-danger">Remove Password</button>
+        </div>
+
+        <div id="change-password-form" class="settings-content hidden">
+          <div class="input-group vertical">
+            <input type="password" id="current-password" placeholder="Current password">
+            <input type="password" id="change-new-password" placeholder="New password">
+            <input type="password" id="change-confirm-password" placeholder="Confirm new password">
+          </div>
+          <div class="button-row">
+            <button id="save-new-password-btn" class="btn-primary">Save</button>
+            <button id="cancel-change-password-btn" class="btn-secondary">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MFA Section -->
+      <div id="mfa-section" class="settings-section hidden">
+        <h2>Two-Factor Authentication</h2>
+
+        <div id="mfa-not-set" class="settings-content">
+          <p class="settings-desc">Add an extra layer of security with an authenticator app.</p>
+          <button id="setup-mfa-btn" class="btn-primary">Enable 2FA</button>
+        </div>
+
+        <div id="mfa-setup" class="settings-content hidden">
+          <p class="settings-desc">Scan this QR code with your authenticator app (Google Authenticator, Authy, etc.)</p>
+          <div id="qr-container" class="qr-container">
+            <canvas id="qr-code"></canvas>
+          </div>
+          <div class="secret-display">
+            <p class="settings-desc">Or enter this code manually:</p>
+            <code id="mfa-secret"></code>
+          </div>
+          <div class="input-group vertical">
+            <input type="text" id="verify-mfa-code" placeholder="Enter 6-digit code to verify" maxlength="6">
+          </div>
+          <div class="button-row">
+            <button id="verify-mfa-btn" class="btn-primary">Verify & Enable</button>
+            <button id="cancel-mfa-btn" class="btn-secondary">Cancel</button>
+          </div>
+        </div>
+
+        <div id="mfa-enabled" class="settings-content hidden">
+          <p class="settings-desc success-text">Two-factor authentication is enabled.</p>
+          <button id="disable-mfa-btn" class="btn-danger">Disable 2FA</button>
+        </div>
+      </div>
+
+      <div id="settings-status" class="status"></div>
+    </div>
+  </div>
+
+  <script src="qrcode.min.js"></script>
+  <script src="crypto.js"></script>
+  <script src="totp.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
